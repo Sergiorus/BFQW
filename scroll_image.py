@@ -111,12 +111,11 @@ class CanvasImage:
             w = int(h2 * aspect_ratio1)  # band length
         i, j, n = 0, 1, round(0.5 + self.imheight / self.__band_width)
         while i < self.imheight:
-            print('\rOpening image: {j} from {n}'.format(j=j, n=n), end='')
             band = min(self.__band_width, self.imheight - i)  # width of the tile band
             self.__tile[1][3] = band  # set band width
             self.__tile[2] = self.__offset + self.imwidth * i * 3  # tile offset (3 bytes per pixel)
-            self.__image.close()
-            self.__image = Image.open(self.path)  # reopen / reset image
+            #self.__image.close()
+            #self.__image = Image.open(self.path)  # reopen / reset image
             self.__image.size = (self.imwidth, band)  # set size of the tile band
             self.__image.tile = [self.__tile]  # set tile
             cropped = self.__image.crop((0, 0, self.imwidth, band))  # crop tile band
@@ -128,6 +127,7 @@ class CanvasImage:
 
     def redraw_figures(self):
         """ Dummy function to redraw figures in the children classes """
+
         pass
 
     def grid(self, **kw):
@@ -187,8 +187,8 @@ class CanvasImage:
                 h = int((y2 - y1) / self.imscale)  # height of the tile band
                 self.__tile[1][3] = h  # set the tile band height
                 self.__tile[2] = self.__offset + self.imwidth * int(y1 / self.imscale) * 3
-                self.__image.close()
-                self.__image = Image.open(self.path)  # reopen / reset image
+                #self.__image.close()
+                #self.__image = Image.open(self.path)  # reopen / reset image
                 self.__image.size = (self.imwidth, h)  # set size of the tile band
                 self.__image.tile = [self.__tile]
                 image = self.__image.crop((int(x1 / self.imscale), 0, int(x2 / self.imscale), h))
@@ -273,8 +273,8 @@ class CanvasImage:
             band = bbox[3] - bbox[1]  # width of the tile band
             self.__tile[1][3] = band  # set the tile height
             self.__tile[2] = self.__offset + self.imwidth * bbox[1] * 3  # set offset of the band
-            self.__image.close()
-            self.__image = Image.open(self.path)  # reopen / reset image
+            #self.__image.close()
+            #self.__image = Image.open(self.path)  # reopen / reset image
             self.__image.size = (self.imwidth, band)  # set size of the tile band
             self.__image.tile = [self.__tile]
             return self.__image.crop((bbox[0], 0, bbox[2], band))
@@ -289,4 +289,3 @@ class CanvasImage:
         del self.__pyramid  # delete pyramid variable
         self.canvas.destroy()
         self.__imframe.destroy()
-

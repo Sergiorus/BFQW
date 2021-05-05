@@ -19,6 +19,6 @@ class Transformer:
     def get_PD_from_log(self):
         df = pd.read_fwf(self.path)
         cols = df.columns.tolist()
-        cols=cols[-1:] + cols[:-1]
+        cols = cols[-1:] + cols[:-1]
         df = df[cols]
         return df
